@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "Fuel Route Planner",
+    "description": "Route and cheapest fuel stops, 500 mile range at 10 mpg.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{ "key": "base_url", "value": "http://127.0.0.1:8000" }],
+  "item": [
+    {
+      "name": "Plan route (GET, city names)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=New York, NY&finish=Los Angeles, CA",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            { "key": "start", "value": "New York, NY" },
+            { "key": "finish", "value": "Los Angeles, CA" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Plan route (POST JSON)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"start\": \"Dallas, TX\",\n  \"finish\": \"Chicago, IL\"\n}" },
+        "url": { "raw": "{{base_url}}/api/route/", "host": ["{{base_url}}"], "path": ["api", "route", ""] }
+      }
+    },
+    {
+      "name": "Plan route (lat,lng)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"start\": \"47.6062,-122.3321\",\n  \"finish\": \"25.7617,-80.1918\"\n}" },
+        "url": { "raw": "{{base_url}}/api/route/", "host": ["{{base_url}}"], "path": ["api", "route", ""] }
+      }
+    },
+    {
+      "name": "Map page",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/route/map/?start=New York, NY&finish=Los Angeles, CA",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", "map", ""],
+          "query": [
+            { "key": "start", "value": "New York, NY" },
+            { "key": "finish", "value": "Los Angeles, CA" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Error: outside USA",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=51.5074,-0.1278&finish=Chicago, IL",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            { "key": "start", "value": "51.5074,-0.1278" },
+            { "key": "finish", "value": "Chicago, IL" }
+          ]
+        }
+      }
+    }
+  ]
+}
