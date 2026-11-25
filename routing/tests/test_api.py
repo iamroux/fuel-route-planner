@@ -102,3 +102,16 @@ class RouteApiTests(TestCase):
         self.osrm.side_effect = requests.ConnectionError('down')
         resp = self.client.get(reverse('route-plan'), {'start': 'Westville, OK', 'finish': 'Eastville, AR'})
         self.assertEqual(resp.status_code, 502)
+
+
+class ApiDocsTests(TestCase):
+    def test_schema_lists_route_endpoints(self):
+        spec = self.client.get(reverse('api-schema')).json()
+        self.assertEqual(spec['openapi'], '3.0.3')
+        self.assertIn('/api/route/', spec['paths'])
+        self.assertEqual(set(spec['paths']['/api/route/']), {'get', 'post'})
+
+    def test_docs_page_loads_swagger(self):
+        resp = self.client.get(reverse('api-docs'))
+        self.assertContains(resp, 'swagger-ui-bundle.js')
+        self.assertContains(resp, reverse('api-schema'))

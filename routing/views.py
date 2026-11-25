@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_http_methods
 
 from .errors import InputError, PlannerError
+from .openapi import SPEC
 from .planner import plan_trip
 
 
@@ -64,3 +65,13 @@ def route_map(request):
     except PlannerError as exc:
         return render(request, 'routing/map.html', {'error': str(exc)}, status=exc.status)
     return render(request, 'routing/map.html', {'plan': result})
+
+
+@require_GET
+def api_schema(request):
+    return JsonResponse(SPEC)
+
+
+@require_GET
+def api_docs(request):
+    return render(request, 'routing/docs.html')

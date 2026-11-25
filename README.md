@@ -71,7 +71,9 @@ Errors:
 
 Leaflet map of the route and fuel stops. The JSON response links to it in `map_url`.
 
-There's a Postman collection in `postman_collection.json`.
+### `GET /api/docs/`
+
+Swagger UI for trying the API in the browser. The OpenAPI spec is at `/api/openapi.json`. There's also a Postman collection in `postman_collection.json`.
 
 ## How it works
 
